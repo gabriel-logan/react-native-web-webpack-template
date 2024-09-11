@@ -4,8 +4,14 @@ Basic starter template, showing how to correctly configure React Native Web usin
 
 First install React Native, if you already have it installed, skip this step.
 
-```shell
+```sh
 npx @react-native-community/cli@latest init web
+```
+
+Run
+
+```sh
+cd web/
 ```
 
 Now install react native web and its dependencies
@@ -20,7 +26,7 @@ The Babel plugin is recommended for build-time optimizations.
 yarn add -D babel-plugin-react-native-web
 ```
 
-Install webpack dependencies
+Install ´webpack´ dependencies
 
 ```sh
 yarn add -D webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader babel-plugin-module-resolver
