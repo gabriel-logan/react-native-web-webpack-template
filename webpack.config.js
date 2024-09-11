@@ -54,7 +54,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(appDirectory, "dist"),
-    publicPath: "/",
+    publicPath: "./",
     filename: "rnw.bundle.js",
   },
   resolve: {
