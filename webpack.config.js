@@ -4,7 +4,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const appDirectory = path.resolve(__dirname);
-const { presets } = require(`${appDirectory}/babel.config.js`);
+const { presets, plugins } = require(`${appDirectory}/babel.config.js`);
 
 const compileNodeModules = [
   // Add every react-native package that needs compiling
@@ -25,7 +25,7 @@ const babelLoaderConfiguration = {
     options: {
       cacheDirectory: true,
       presets,
-      plugins: ["react-native-web"],
+      plugins,
     },
   },
 };
@@ -49,6 +49,7 @@ const imageLoaderConfiguration = {
   },
 };
 
+/** @type {import("webpack").Configuration} */
 module.exports = {
   entry: {
     app: path.join(__dirname, "index.web.js"),

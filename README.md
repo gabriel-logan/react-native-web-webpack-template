@@ -183,13 +183,13 @@ Now create a webpack configuration file `webpack.config.js` in the root folder
 and paste the code below
 
 ```js
-const path = require('path');
-
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
 
 const appDirectory = path.resolve(__dirname);
-const {presets} = require(`${appDirectory}/babel.config.js`);
+const { presets, plugins } = require(`${appDirectory}/babel.config.js`);
 
 const compileNodeModules = [
   // Add every react-native package that needs compiling
@@ -200,17 +200,17 @@ const babelLoaderConfiguration = {
   test: /\.js$|tsx?$/,
   // Add every directory that needs to be compiled by Babel during the build.
   include: [
-    path.resolve(__dirname, 'index.web.js'), // Entry to your application
-    path.resolve(__dirname, 'App.tsx'), // Change this to your main App file
-    path.resolve(__dirname, 'src'),
+    path.resolve(__dirname, "index.web.js"), // Entry to your application
+    path.resolve(__dirname, "App.tsx"), // Change this to your main App file
+    path.resolve(__dirname, "src"),
     ...compileNodeModules,
   ],
   use: {
-    loader: 'babel-loader',
+    loader: "babel-loader",
     options: {
       cacheDirectory: true,
       presets,
-      plugins: ['react-native-web'],
+      plugins,
     },
   },
 };
@@ -219,7 +219,7 @@ const svgLoaderConfiguration = {
   test: /\.svg$/,
   use: [
     {
-      loader: '@svgr/webpack',
+      loader: "@svgr/webpack",
     },
   ],
 };
@@ -227,26 +227,27 @@ const svgLoaderConfiguration = {
 const imageLoaderConfiguration = {
   test: /\.(gif|jpe?g|png)$/,
   use: {
-    loader: 'url-loader',
+    loader: "url-loader",
     options: {
-      name: '[name].[ext]',
+      name: "[name].[ext]",
     },
   },
 };
 
+/** @type {import("webpack").Configuration} */
 module.exports = {
   entry: {
-    app: path.join(__dirname, 'index.web.js'),
+    app: path.join(__dirname, "index.web.js"),
   },
   output: {
-    path: path.resolve(appDirectory, 'dist'),
-    publicPath: '/',
-    filename: 'rnw.bundle.js',
+    path: path.resolve(appDirectory, "dist"),
+    publicPath: "./", // Using ./ for the github pages, change to / for local or other hosting
+    filename: "rnw.bundle.js",
   },
   resolve: {
-    extensions: ['.web.tsx', '.web.ts', '.tsx', '.ts', '.web.js', '.js'],
+    extensions: [".web.tsx", ".web.ts", ".tsx", ".ts", ".web.js", ".js"],
     alias: {
-      'react-native$': 'react-native-web',
+      "react-native$": "react-native-web",
     },
   },
   module: {
@@ -258,12 +259,15 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'index.html'),
+      template: path.join(__dirname, "index.html"),
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       // See: https://github.com/necolas/react-native-web/issues/349
       __DEV__: JSON.stringify(true),
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: "public", to: "" }],
     }),
   ],
 };
