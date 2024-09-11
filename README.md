@@ -1,79 +1,226 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+### React Native Cli - Webpack
 
-# Getting Started
+Primeiro instale o React Native, se ja tem instalado ignore esse passo
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
-
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+```shell
+npx @react-native-community/cli@latest init web
 ```
 
-## Step 2: Start your Application
+Agora instale o react native web e suas dependencias
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```sh
+yarn add react-dom react-native-web
 ```
 
-### For iOS
+The Babel plugin is recommended for build-time optimizations.
 
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+```sh
+yarn add -D babel-plugin-react-native-web
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+Adicione os scripts necessarios para rodar o projeto no seu package.json
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+```json
+"scripts": {
+  "android": "react-native run-android",
+  "ios": "react-native run-ios",
+  "build:web": "rm -rf dist/ && webpack --mode=production --config webpack.config.js", // This line for build project
+  "web": "webpack serve --mode=development --config webpack.config.js", // This line for dev mode
+  "lint": "eslint .",
+  "start": "react-native start",
+  "test": "jest"
+},
+```
 
-## Step 3: Modifying your App
+Copie o codigo para o App.tsx
 
-Now that you have successfully run the app, let's modify it.
+```js
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+function App() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Hello World!</Text>
+      <TouchableOpacity style={styles.button}>
+        <Text>Click me!</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#C3E8BD",
+    paddingTop: 40,
+    paddingHorizontal: 10,
+  },
+  button: {
+    backgroundColor: "#ADBDFF",
+    padding: 5,
+    marginVertical: 20,
+    alignSelf: "flex-start",
+  },
+  title: {
+    fontSize: 40,
+  },
+});
 
-## Congratulations! :tada:
+export default App;
+```
 
-You've successfully run and modified your React Native App. :partying_face:
+Crie um arquivo chamado index.html na pasta root do seu projeto
 
-### Now what?
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>React Native Web</title>
+    <style>
+      #app-root {
+        display: flex;
+        flex: 1 1 100%;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-root"></div>
+  </body>
+</html>
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+Agora crie um arquivo na pasta raiz com o nome index.web.js
 
-# Troubleshooting
+Cole o codigo abaixo
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+```js
+import { AppRegistry } from "react-native";
 
-# Learn More
+import App from "./App";
+import { name as appName } from "./app.json";
+if (module.hot) {
+  module.hot.accept();
+}
+AppRegistry.registerComponent(appName, () => App);
+AppRegistry.runApplication(appName, {
+  initialProps: {},
+  rootTag: document.getElementById("app-root"),
+});
+```
 
-To learn more about React Native, take a look at the following resources:
+Agora crie um arquivo de configuração para o webpack webpack.config.js na pasta raiz
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+e cole o codigo abaixo
+
+```js
+const path = require('path');
+
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const appDirectory = path.resolve(__dirname);
+const {presets} = require(`${appDirectory}/babel.config.js`);
+
+const compileNodeModules = [
+  // Add every react-native package that needs compiling
+  // 'react-native-gesture-handler',
+].map((moduleName) => path.resolve(appDirectory, `node_modules/${moduleName}`));
+
+const babelLoaderConfiguration = {
+  test: /\.js$|tsx?$/,
+  // Add every directory that needs to be compiled by Babel during the build.
+  include: [
+    path.resolve(__dirname, 'index.web.js'), // Entry to your application
+    path.resolve(__dirname, 'App.tsx'), // Change this to your main App file
+    path.resolve(__dirname, 'src'),
+    ...compileNodeModules,
+  ],
+  use: {
+    loader: 'babel-loader',
+    options: {
+      cacheDirectory: true,
+      presets,
+      plugins: ['react-native-web'],
+    },
+  },
+};
+
+const svgLoaderConfiguration = {
+  test: /\.svg$/,
+  use: [
+    {
+      loader: '@svgr/webpack',
+    },
+  ],
+};
+
+const imageLoaderConfiguration = {
+  test: /\.(gif|jpe?g|png)$/,
+  use: {
+    loader: 'url-loader',
+    options: {
+      name: '[name].[ext]',
+    },
+  },
+};
+
+module.exports = {
+  entry: {
+    app: path.join(__dirname, 'index.web.js'),
+  },
+  output: {
+    path: path.resolve(appDirectory, 'dist'),
+    publicPath: '/',
+    filename: 'rnw_blogpost.bundle.js',
+  },
+  resolve: {
+    extensions: ['.web.tsx', '.web.ts', '.tsx', '.ts', '.web.js', '.js'],
+    alias: {
+      'react-native$': 'react-native-web',
+    },
+  },
+  module: {
+    rules: [
+      babelLoaderConfiguration,
+      imageLoaderConfiguration,
+      svgLoaderConfiguration,
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'index.html'),
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      // See: https://github.com/necolas/react-native-web/issues/349
+      __DEV__: JSON.stringify(true),
+    }),
+  ],
+};
+```
+
+Adicione configuracoes no babel.config.js
+
+```js
+plugins: [
+   [
+   "module-resolver",
+   {
+      alias: {
+         "^react-native$": "react-native-web",
+      },
+   },
+   ],
+   "react-native-web",
+],
+```
+
+Se precisar criar tests usando jest adicione a configuração abaixo no seu arquivo de test
+
+```js
+moduleNameMapper: {
+   "^react-native$": "react-native-web",
+},
+```
