@@ -1,12 +1,12 @@
 ### React Native Cli - Webpack
 
-Primeiro instale o React Native, se ja tem instalado ignore esse passo
+First install React Native, if you already have it installed, skip this step.
 
 ```shell
 npx @react-native-community/cli@latest init web
 ```
 
-Agora instale o react native web e suas dependencias
+Now install react native web and its dependencies
 
 ```sh
 yarn add react-dom react-native-web
@@ -24,7 +24,7 @@ Install webpack dependencies
 yarn add -D webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader babel-plugin-module-resolver
 ```
 
-Adicione os scripts necessarios para rodar o projeto no seu package.json
+Add the necessary scripts to run the project to your package.json
 
 ```json
 "scripts": {
@@ -38,7 +38,9 @@ Adicione os scripts necessarios para rodar o projeto no seu package.json
 },
 ```
 
-Copie o codigo para o App.tsx
+Copy the code to App.tsx
+
+If you want to have separate web files, create an App.web.tsx file and replace all the values ​​from the following steps.
 
 ```js
 import {
@@ -113,8 +115,9 @@ const styles = StyleSheet.create({
 export default App;
 ```
 
-Crie um arquivo chamado index.html na pasta root do seu projeto
+Create a file called index.html in the root folder of your project
 
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -134,10 +137,11 @@ Crie um arquivo chamado index.html na pasta root do seu projeto
     <div id="app-root"></div>
   </body>
 </html>
+```
 
-Agora crie um arquivo na pasta raiz com o nome index.web.js
+Now create a file in the root folder named index.web.js
 
-Cole o codigo abaixo
+Paste the code below
 
 ```js
 import { AppRegistry } from "react-native";
@@ -154,9 +158,9 @@ AppRegistry.runApplication(appName, {
 });
 ```
 
-Agora crie um arquivo de configuração para o webpack webpack.config.js na pasta raiz
+Now create a webpack configuration file webpack.config.js in the root folder
 
-e cole o codigo abaixo
+and paste the code below
 
 ```js
 const path = require('path');
@@ -245,7 +249,7 @@ module.exports = {
 };
 ```
 
-Adicione configuracoes no babel.config.js
+Add settings to babel.config.js
 
 ```js
 plugins: [
@@ -261,10 +265,22 @@ plugins: [
 ],
 ```
 
-Se precisar criar tests usando jest adicione a configuração abaixo no seu arquivo de test
+If you need to create tests using jest add the configuration below to your test file
 
 ```js
 moduleNameMapper: {
    "^react-native$": "react-native-web",
 },
 ```
+
+Done
+
+Your react native web project configured with webpack is ready for the initial kickstart
+
+Thanks for reading
+
+Created by: Gabriel Logan
+
+License
+
+MIT
