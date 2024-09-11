@@ -183,7 +183,6 @@ Now create a webpack configuration file `webpack.config.js` in the root folder
 and paste the code below
 
 ```js
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
@@ -265,9 +264,6 @@ module.exports = {
     new webpack.DefinePlugin({
       // See: https://github.com/necolas/react-native-web/issues/349
       __DEV__: JSON.stringify(true),
-    }),
-    new CopyWebpackPlugin({
-      patterns: [{ from: "public", to: "" }],
     }),
   ],
 };
