@@ -363,7 +363,7 @@ Your react native web project configured with webpack is ready for the initial k
 
 Thanks for reading
 
-Created by: Gabriel Logan
+Created by: Gabriel Logan using React Native Web
 
 ## License
 
