@@ -281,7 +281,41 @@ moduleNameMapper: {
 },
 ```
 
-Done
+## Additional
+
+To copy public static files to production, add an additional configuration in `webpack`
+
+```sh
+yarn add -D copy-webpack-plugin
+```
+
+Import the configuration into your `webpack` configuration file
+
+```js
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+```
+
+and finally add the configuration in the `plugin` part
+
+```js
+plugins: [
+  new HtmlWebpackPlugin({
+    template: path.join(__dirname, "index.html"),
+  }),
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.DefinePlugin({
+    // See: https://github.com/necolas/react-native-web/issues/349
+    __DEV__: JSON.stringify(true),
+  }),
+  new CopyWebpackPlugin({ // ADD THIS LINE
+    patterns: [{ from: "public", to: "" }],
+  }),
+],
+```
+
+With these settings, all files inside the `public` folder will be compiled together to the `dist` folder.
+
+## Done
 
 Your react native web project configured with webpack is ready for the initial kickstart
 
