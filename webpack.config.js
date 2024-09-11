@@ -56,7 +56,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(appDirectory, "dist"),
-    publicPath: "/", // Using ./ for the github pages, change to / for local or other hosting
+    publicPath: "./", // Using ./ for the github pages, change to / for local or other hosting
     filename: "rnw.bundle.js",
   },
   resolve: {
