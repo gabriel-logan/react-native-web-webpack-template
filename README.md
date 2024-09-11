@@ -26,13 +26,13 @@ The Babel plugin is recommended for build-time optimizations.
 yarn add -D babel-plugin-react-native-web
 ```
 
-Install ´webpack´ dependencies
+Install `webpack` dependencies
 
 ```sh
 yarn add -D webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader babel-plugin-module-resolver
 ```
 
-Add the necessary scripts to run the project to your package.json
+Add the necessary scripts to run the project to your `package.json`
 
 ```json
 "scripts": {
@@ -46,7 +46,7 @@ Add the necessary scripts to run the project to your package.json
 },
 ```
 
-Copy the code to App.tsx
+Copy the code to `App.tsx`
 
 If you want to have separate web files, create an App.web.tsx file and replace all the values ​​from the following steps.
 
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
 export default App;
 ```
 
-Create a file called index.html in the root folder of your project
+Create a file called `index.html` in the root folder of your project
 
 ```html
 <!DOCTYPE html>
@@ -147,7 +147,7 @@ Create a file called index.html in the root folder of your project
 </html>
 ```
 
-Now create a file in the root folder named index.web.js
+Now create a file in the root folder named `index.web.js`
 
 Paste the code below
 
@@ -166,7 +166,7 @@ AppRegistry.runApplication(appName, {
 });
 ```
 
-Now create a webpack configuration file webpack.config.js in the root folder
+Now create a webpack configuration file `webpack.config.js` in the root folder
 
 and paste the code below
 
@@ -257,7 +257,7 @@ module.exports = {
 };
 ```
 
-Add settings to babel.config.js
+Add settings to `babel.config.js`
 
 ```js
 plugins: [
@@ -273,7 +273,7 @@ plugins: [
 ],
 ```
 
-If you need to create tests using jest add the configuration below to your test file
+If you need to create tests using `jest` add the configuration below to your test file
 
 ```js
 moduleNameMapper: {
@@ -289,6 +289,6 @@ Thanks for reading
 
 Created by: Gabriel Logan
 
-License
+## License
 
 MIT
