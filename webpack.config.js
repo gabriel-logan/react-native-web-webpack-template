@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
@@ -54,7 +55,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(appDirectory, "dist"),
-    publicPath: "./",
+    publicPath: "./", // Using ./ for the github pages, change to / for local or other hosting
     filename: "rnw.bundle.js",
   },
   resolve: {
@@ -78,6 +79,9 @@ module.exports = {
     new webpack.DefinePlugin({
       // See: https://github.com/necolas/react-native-web/issues/349
       __DEV__: JSON.stringify(true),
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: "public", to: "" }],
     }),
   ],
 };
