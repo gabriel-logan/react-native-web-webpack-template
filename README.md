@@ -1,6 +1,10 @@
-### React Native Cli - Webpack
+# React Native Cli - Webpack
+
+## Description
 
 Basic starter template, showing how to correctly configure React Native Web using React Native Cli, using webpack and typescript.
+
+## Installation
 
 First install React Native, if you already have it installed, skip this step.
 
@@ -31,6 +35,8 @@ Install `webpack` dependencies
 ```sh
 yarn add -D webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader babel-plugin-module-resolver
 ```
+
+## Configuration files
 
 Add the necessary scripts to run the project to your `package.json`
 
@@ -137,6 +143,7 @@ Create a file called `index.html` in the root folder of your project
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="React Native Web" />
     <title>React Native Web</title>
     <style>
       #app-root {
@@ -319,6 +326,36 @@ plugins: [
 ```
 
 With these settings, all files inside the `public` folder will be compiled together to the `dist` folder.
+
+Now you can add a favicon for example in the `public/assets/favicon.png` folder
+
+And add it to your `index.html`
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="React Native Web" />
+    <link rel="icon" href="./assets/favicon.png" />
+    <title>React Native Web</title>
+    <style>
+      #app-root {
+        display: flex;
+        flex: 1 1 100%;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-root"></div>
+  </body>
+</html>
+```
+
+Now you will see your favicon appearing in development mode as well as in production.
 
 ## Done
 
