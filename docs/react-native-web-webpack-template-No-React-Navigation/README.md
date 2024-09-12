@@ -240,7 +240,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(appDirectory, "dist"),
-    publicPath: "/", // Using ./ for the github pages, change to / for local
+    publicPath: "/",
     filename: "rnw.bundle.js",
   },
   resolve: {
@@ -364,26 +364,6 @@ Your react native web project configured with webpack is ready for the initial k
 Thanks for reading
 
 Created by: Gabriel Logan using React Native Web
-
-## @react-navigation
-
-Follow the manual installation documentation for @react-navigation/native which is required to use React Navigation
-
-https://reactnavigation.org/docs/getting-started/
-
-Then use one of the Navigators you intend to use.
-
-For example: Native Stack Navigator
-
-https://reactnavigation.org/docs/native-stack-navigator
-
-Read the information about web support
-
-https://reactnavigation.org/docs/web-support
-
-The Example without React Navigation can be found in the docs folder
-
-If you want to test with React Navigation, you can git clone the main repository.
 
 ## License
 

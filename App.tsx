@@ -1,4 +1,8 @@
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
+  Button,
   Linking,
   StyleSheet,
   Text,
@@ -6,7 +10,88 @@ import {
   View,
 } from "react-native";
 
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
 function App() {
+  return (
+    <NavigationContainer>
+      <HomeTab />
+    </NavigationContainer>
+  );
+}
+
+function HomeTab() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen
+        name="SettingsStack"
+        component={SettingsStack}
+        options={{ headerShown: false }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+function SettingsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Notifications" component={Notifications} />
+      <Stack.Screen name="Profile" component={Profile} />
+    </Stack.Navigator>
+  );
+}
+
+function SettingsScreen() {
+  const navigation = useNavigation();
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Settings</Text>
+      <Button
+        title="Go to Notifications"
+        onPress={() => {
+          navigation.navigate("Notifications" as never);
+        }}
+      />
+    </View>
+  );
+}
+
+function Notifications() {
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Notifications</Text>
+      <Button
+        title="Go to Profile"
+        onPress={() => {
+          navigation.navigate("Profile" as never);
+        }}
+      />
+    </View>
+  );
+}
+
+function Profile() {
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Profile</Text>
+      <Button
+        title="Go to Settings"
+        onPress={() => {
+          navigation.navigate("Settings" as never);
+        }}
+      />
+    </View>
+  );
+}
+
+function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Hello World!</Text>
