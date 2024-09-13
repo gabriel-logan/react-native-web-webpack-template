@@ -4,7 +4,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const appDirectory = path.resolve(__dirname);
-const { presets, plugins } = require(`${appDirectory}/babel.config.js`);
+const { presets, plugins } = require(`${appDirectory}/babel.config.web.js`);
 
 const compileNodeModules = [
   // Add every react-native package that needs compiling
@@ -57,7 +57,7 @@ module.exports = {
   output: {
     path: path.resolve(appDirectory, "dist"),
     publicPath: "./", // Using ./ for the github pages, change to / for local or other hosting
-    filename: "rnw.bundle.js",
+    filename: "[name].[contenthash].js", // Use placeholders for unique filenames
   },
   resolve: {
     extensions: [".web.tsx", ".web.ts", ".tsx", ".ts", ".web.js", ".js"],
@@ -85,4 +85,13 @@ module.exports = {
       patterns: [{ from: "public", to: "" }],
     }),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+  },
+  performance: {
+    maxAssetSize: 512000, // 500kb
+    maxEntrypointSize: 512000, // 500kb
+  },
 };

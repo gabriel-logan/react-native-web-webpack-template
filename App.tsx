@@ -13,7 +13,7 @@ import {
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function App() {
+export default function App() {
   return (
     <NavigationContainer>
       <HomeTab />
@@ -99,7 +99,7 @@ function HomeScreen() {
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Press Me</Text>
       </TouchableOpacity>
-      <Text>
+      <Text style={styles.createdBy}>
         Created by:{" "}
         <TouchableOpacity
           onPress={() => {
@@ -139,17 +139,22 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 40,
+    color: "blue",
+    marginBottom: 10,
   },
   subTitle: {
     fontSize: 20,
+    color: "green",
   },
   paragraph: {
     fontSize: 16,
+    color: "black",
+  },
+  createdBy: {
+    color: "black",
   },
   link: {
     color: "blue",
     textDecorationLine: "underline",
   },
 });
-
-export default App;
