@@ -4,7 +4,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const appDirectory = path.resolve(__dirname);
-const { presets, plugins } = require(`${appDirectory}/babel.config.js`);
+const { presets, plugins } = require(`${appDirectory}/babel.config.web.js`);
 
 const compileNodeModules = [
   // Add every react-native package that needs compiling

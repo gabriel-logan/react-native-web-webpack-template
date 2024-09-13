@@ -188,7 +188,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const appDirectory = path.resolve(__dirname);
-const { presets, plugins } = require(`${appDirectory}/babel.config.js`);
+const { presets, plugins } = require(`${appDirectory}/babel.config.web.js`);
 
 const compileNodeModules = [
   // Add every react-native package that needs compiling
@@ -269,20 +269,25 @@ module.exports = {
 };
 ```
 
-Add settings to `babel.config.js`
+Create a new babel file so there are no conflicts with the mobile version
+
+Add settings to `babel.config.web.js`
 
 ```js
-plugins: [
-   [
-   "module-resolver",
-   {
-      alias: {
-         "^react-native$": "react-native-web",
+module.exports = {
+  presets: ["module:@react-native/babel-preset"],
+  plugins: [
+    [
+      "module-resolver",
+      {
+        alias: {
+          "^react-native$": "react-native-web",
+        },
       },
-   },
-   ],
-   "react-native-web",
-],
+    ],
+    "react-native-web",
+  ],
+};
 ```
 
 If you need to create tests using `jest` add the configuration below to your test file
