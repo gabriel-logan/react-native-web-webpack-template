@@ -33,7 +33,7 @@ yarn add -D babel-plugin-react-native-web
 Install `webpack` dependencies
 
 ```sh
-yarn add -D webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader babel-plugin-module-resolver url-loader
+yarn add -D webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader babel-plugin-module-resolver url-loader @svgr/webpack
 ```
 
 ## Configuration files
