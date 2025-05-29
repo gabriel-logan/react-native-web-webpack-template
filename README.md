@@ -1,10 +1,69 @@
+<!-- README.md -->
 # React Native Cli - Webpack
 
 ## Description
 
 Basic starter template, showing how to correctly configure React Native Web using React Native Cli, using webpack and typescript.
 
-## Installation
+### Upgrade to React 19
+
+This branch has been upgraded to react@19 and react-navigation@7 along with all other dependencies to their latest compatible verisons. Switch to the main branch for react@18 and react-navigation@6.
+    * upgrading from react@18 to react@19 manually requires adding this snippet to `module.rules` in `webpack.config.js`
+  
+```js
+    module: {
+      rules: [
+        {
+          test: /\.m?js$/,
+          include: [
+            path.resolve(
+              __dirname,
+              "node_modules/@react-navigation/core/lib/module"
+            ),
+            path.resolve(
+              __dirname,
+              "node_modules/@react-navigation/elements/lib/module"
+            ),
+            path.resolve(
+              __dirname,
+              "node_modules/@react-navigation/native/lib/module"
+            ),
+            path.resolve(
+              __dirname,
+              "node_modules/@react-navigation/native-stack/lib/module"
+            ),
+            // bottom-tabs doesn't error but is included for consistendcy
+            path.resolve(
+              __dirname,
+              "node_modules/@react-navigation/bottom-tabs/lib/module"
+            ),
+          ],
+          resolve: {
+            fullySpecified: false, // fix for @react-navigation@7 errors
+          },
+        },
+```
+
+## Steps to install template
+
+1. Run in terminal
+    ```sh
+      git clone https://github.com/gabriel-logan/react-native-web-webpack-template.git <YOUR_PROJECT_NAME>
+    ```
+1. Change `webpack.Configuration.output.publicPath` in `webpack.config.js` from `"./"` to `"/"`
+      * The `.` is needed for GitHub pages deployment
+1. Update the `"name"` field in `package.json` to `<YOUR_PROJECT_NAME>` to match your project's folder name
+1. Run in terminal at project root
+    ```sh
+      yarn
+    ```
+    * `yarn` is recommended for its tooling for monorepos and dependency resolution. `react-native-web` dependencies can be much harded to deal with on `npm`
+1. Run in terminal at project root
+    ```sh
+      yarn web
+    ```
+
+## Installation from Scratch with RN CLI
 
 First install React Native, if you already have it installed, skip this step.
 

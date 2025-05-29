@@ -70,6 +70,36 @@ module.exports = {
       babelLoaderConfiguration,
       imageLoaderConfiguration,
       svgLoaderConfiguration,
+      // fix for @react-navigation@7 errors
+      {
+        test: /\.m?js$/,
+        include: [
+          path.resolve(
+            __dirname,
+            "node_modules/@react-navigation/core/lib/module"
+          ),
+          path.resolve(
+            __dirname,
+            "node_modules/@react-navigation/elements/lib/module"
+          ),
+          path.resolve(
+            __dirname,
+            "node_modules/@react-navigation/native/lib/module"
+          ),
+          path.resolve(
+            __dirname,
+            "node_modules/@react-navigation/native-stack/lib/module"
+          ),
+          // bottom-tabs doesn't error but is included for consistendcy
+          path.resolve(
+            __dirname,
+            "node_modules/@react-navigation/bottom-tabs/lib/module"
+          ),
+        ],
+        resolve: {
+          fullySpecified: false, // fix for @react-navigation@7 errors
+        },
+      },
     ],
   },
   plugins: [
