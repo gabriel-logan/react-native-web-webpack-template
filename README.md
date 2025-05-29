@@ -4,7 +4,26 @@
 
 Basic starter template, showing how to correctly configure React Native Web using React Native Cli, using webpack and typescript.
 
-## Installation
+## Steps to install template
+
+1. Run in terminal
+    ```sh
+      git clone https://github.com/gabriel-logan/react-native-web-webpack-template.git <YOUR_PROJECT_NAME>
+    ```
+1. Change `webpack.Configuration.output.publicPath` in `webpack.config.js` from `"./"` to `"/"`
+      * The `.` is needed for GitHub pages deployment
+1. Update the `"name"` field in `package.json` to `<YOUR_PROJECT_NAME>` to match your project's folder name
+1. Run in terminal at project root
+    ```sh
+      yarn
+    ```
+    * `yarn` is recommended for its tooling for monorepos and dependency resolution. `react-native-web` dependencies can be much harded to deal with on `npm`
+1. Run in terminal at project root
+    ```sh
+      yarn web
+    ```
+
+## Installation from Scratch with RN CLI
 
 First install React Native, if you already have it installed, skip this step.
 
